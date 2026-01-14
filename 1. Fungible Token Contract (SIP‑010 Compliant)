@@ -1,0 +1,7 @@
+Fungible tokens are the most common blockchain assets. In Stacks, they follow the SIP‑010 standard, similar to ERC‑20 in Ethereum.
+Key Capabilities
+
+Minting
+Transferring
+Checking balances
+Allowances (spending authorization)
