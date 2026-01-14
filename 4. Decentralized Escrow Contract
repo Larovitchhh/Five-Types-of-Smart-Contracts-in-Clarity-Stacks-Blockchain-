@@ -1,0 +1,7 @@
+
+A neutral smart contract that holds funds between buyer and seller until conditions are met.
+Capabilities
+
+Funds deposited by buyer
+Seller receives funds after buyer approval
+Refund option
