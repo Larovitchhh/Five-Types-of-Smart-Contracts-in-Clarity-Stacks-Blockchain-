@@ -1,0 +1,27 @@
+
+(define-map escrows principal { seller: principal, amount: uint, released: bool })
+
+(define-public (create-escrow (seller principal))
+  (let ((amount (stx-get-balance tx-sender)))
+    (asserts! (> amount u0) "No STX sent")
+    (map-set escrows tx-sender { seller: seller, amount: amount, released: false })
+    (ok true)
+  )
+)
+
+(define-public (release (buyer principal))
+  (let ((e (map-get escrows buyer)))
+    (asserts! (is-some e) "Not found")
+    (asserts! (is-eq tx-sender (get seller (unwrap! e "Invalid"))) "Not seller")
+    (stx-transfer? (get amount (unwrap! e "Invalid")) buyer tx-sender)
+    (map-set escrows buyer { seller: (get seller (unwrap! e "Invalid")), amount: (get amount (unwrap! e "Invalid")), released: true })
+  )
+)
+
+(define-public (refund (buyer principal))
+  (asserts! (is-eq tx-sender buyer) "Not buyer")
+  (let ((e (map-get escrows buyer)))
+    (asserts! (not (get released (unwrap! e "Invalid"))) "Already released")
+    (stx-transfer? (get amount (unwrap! e "Invalid")) tx-sender buyer)
+  )
+)
