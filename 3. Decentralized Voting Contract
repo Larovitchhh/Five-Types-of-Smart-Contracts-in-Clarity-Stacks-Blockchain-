@@ -1,0 +1,7 @@
+
+A governance/voting contract where users vote on proposals.
+Capabilities
+
+Creating proposals
+One vote per address
+Vote counting
